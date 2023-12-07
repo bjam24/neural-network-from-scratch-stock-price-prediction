@@ -1,4 +1,4 @@
-# Neural network from scratch stock price prediction
+# Neural network from scratch for stock price prediction
 The purpose of this project is implementation of neural network from scratch, which can be used for stock price prediction.
 To achieve this goal ANN is created with features listed below:
 1. Stock High minus Low price (H-L)
