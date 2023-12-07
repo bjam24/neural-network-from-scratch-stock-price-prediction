@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
+np.seterr(divide='ignore', invalid='ignore')
 import matplotlib.pyplot as plt
+from math import sqrt
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 
@@ -43,6 +45,27 @@ class ArtificialNeuralNetwork:
         return self.forward_propagation(X)
 
 
+def root_mean_square_error(predicted_y, true_y):
+    mean_square_error = 0
+    for i in range(len(true_y)):
+        mean_square_error += (predicted_y[i] - true_y[i])**2 / len(true_y)
+    return sqrt(mean_square_error)
+
+
+def mean_absolute_percentage_error(predicted_y, true_y):
+    absolute_percentage_error = 0
+    for i in range(len(true_y)):
+        absolute_percentage_error += abs((true_y[i] - predicted_y[i]) / true_y[i])
+    return absolute_percentage_error / len(true_y)
+
+
+def mean_bias_error(predicted_y, true_y):
+    bias_error = 0
+    for i in range(len(true_y)):
+        bias_error += predicted_y[i] - true_y[i]
+    return bias_error / len(true_y)
+
+
 if __name__ == "__main__":
     # Loading stock data
     stock_data = pd.read_csv('data/TSLA.csv')
@@ -78,10 +101,10 @@ if __name__ == "__main__":
     y_predicted = ANN.predict(x_scaled_dataset)
 
     # Preparing new dataset for visualization
-    y_predicted = scaler_2.inverse_transform(y_predicted) # rescaling predicted data
+    y_rescaled_predicted = scaler_2.inverse_transform(y_predicted) # rescaling predicted data
     visual_dataset = stock_data[['Date', 'Close']].iloc[20:]
     visual_dataset['Date'] = pd.to_datetime(visual_dataset['Date'])
-    visual_dataset['Predicted'] = y_predicted
+    visual_dataset['Predicted'] = y_rescaled_predicted
 
     # Data visualization
     plt.plot(visual_dataset['Date'], visual_dataset['Close'], '-s', linewidth=0.7, markersize=4, color='darkblue',
@@ -93,3 +116,11 @@ if __name__ == "__main__":
     plt.xlabel('Date', fontsize=12)
     plt.ylabel('Price', fontsize=12)
     plt.show()
+
+    # Prediction evaluation methods
+    rmse = root_mean_square_error(y_predicted, y_train)
+    print('RMSE: ' + str(rmse))
+    mape = mean_absolute_percentage_error(y_predicted, y_train)
+    print('MAPE: ' + str(mape))
+    mbe = mean_bias_error(y_predicted, y_train)
+    print('MBE: ' + str(mbe))
