@@ -15,10 +15,12 @@ To achieve this goal ANN is created with features listed below:
 Described neural network is an example of Multilayer Perceptron (MLP). This method belongs to Supervised Learning and uses
 backpropagation during training. Input layer includes 6 neurons for 6 features. There is only 1 neuron in output layer for
 predicted price.
-On the beginning of a project a dataset is created. It contains 6 mentioned features 'X' and Closing Price which is perceived
-as target 'Y'. After scaling data, a dataset is split into training and testing sets. Training set X and Y are used for
-changing neural network's weights during training. After this 
+On the beginning of a project a dataset is created. It contains 6 mentioned features 'X' and Close Price which is perceived
+as target 'Y'. After having scaled data, a dataset is split into training and testing sets. Training set X and Y are used for
+changing neural network's weights during training. After this predicted Y (Closing price) is calculate. The user can choose
+iterations and learning rate. The result of these doings is presented below.
 
+**Visualization of predicted closing price in comparison to historical closing price**
 
 ![image](https://github.com/bjam24/neural-network-from-scratch-stock-price-prediction/assets/61807667/19261f38-c835-47c6-a343-cf32f52a899a)
 
